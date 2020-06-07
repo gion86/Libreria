@@ -13,10 +13,12 @@ public class AmazonBookImporterTest {
 
     @Test
     public void importBooks() {
-        IBookImporter bookImporter = new AmazonBookImporter();
-        // TODO move test file in data folder?
-        bookImporter.importBooks(new File("/home/gionata/Desktop/amazon_book_list.txt"));
+        ClassLoader classLoader = this.getClass().getClassLoader();
+        File bookFile = new File(classLoader.getResource("amazon_book_list.txt").getFile());
+        assertTrue(bookFile.exists());
 
+        IBookImporter bookImporter = new AmazonBookImporter();
+        bookImporter.importBooks(bookFile);
         assertTrue(bookImporter.getBookList().size() == 266);
     }
 }

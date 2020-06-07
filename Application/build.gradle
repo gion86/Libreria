@@ -18,7 +18,7 @@ repositories {
 
 dependencies {
 
-   // TODO use $rootProject.???
+    // TODO use $rootProject.???
     implementation 'com.android.support:support-v4:28.0.0'
     implementation 'com.android.support:support-v13:28.0.0'
     implementation 'com.android.support:cardview-v7:28.0.0'
@@ -38,7 +38,6 @@ dependencies {
 //
 //    // Test helpers
 //    testImplementation "androidx.room:room-testing:$room_version"
-
 
 
     // Room components
@@ -85,6 +84,15 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        test {
+            resources.srcDirs += ['sampledata']
+        }
+        androidTest {
+            resources.srcDirs += ['sampledata']
+        }
     }
 
 //    sourceSets {

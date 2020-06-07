@@ -33,9 +33,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.library.common.activities.SampleActivityBase;
-import com.android.library.common.logger.Log;
-import com.android.library.common.logger.LogWrapper;
-import com.android.library.common.logger.MessageOnlyLogFilter;
 import com.android.library.importdata.AmazonBookImporter;
 import com.android.library.importdata.IBookImporter;
 import com.android.library.model.Book;
@@ -216,27 +213,5 @@ public class MainActivity extends SampleActivityBase {
                 e.printStackTrace();
             }
         }
-    }
-
-    /**
-     * Create a chain of targets that will receive log data
-     */
-    @Override
-    public void initializeLogging() {
-        // Wraps Android's native log framework.
-        LogWrapper logWrapper = new LogWrapper();
-        // Using Log, front-end to the logging chain, emulates android.util.log method signatures.
-        Log.setLogNode(logWrapper);
-
-        // Filter strips out everything except the message text.
-        MessageOnlyLogFilter msgFilter = new MessageOnlyLogFilter();
-        logWrapper.setNext(msgFilter);
-
-//        // On screen logging via a fragment with a TextView.
-//        LogFragment logFragment = (LogFragment) getSupportFragmentManager()
-//                .findFragmentById(R.id.log_fragment);
-//        msgFilter.setNext(logFragment.getLogView());
-
-        Log.i(TAG, "Ready");
     }
 }

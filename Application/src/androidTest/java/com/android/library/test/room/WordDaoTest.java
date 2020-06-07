@@ -47,10 +47,11 @@ import static junit.framework.TestCase.assertEquals;
 @RunWith(AndroidJUnit4.class)
 public class WordDaoTest {
 
+    // To use LiveData in a test setup requires the core-testing library and InstantTaskExecutorRule
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
-    private BookDao mWordDao;
+    private BookDao mBookDao;
     private BookRoomDatabase mDb;
 
     @Before
@@ -62,7 +63,7 @@ public class WordDaoTest {
                 // Allowing main thread queries, just for testing.
                 .allowMainThreadQueries()
                 .build();
-        mWordDao = mDb.bookDao();
+        mBookDao = mDb.bookDao();
     }
 
     @After
@@ -73,30 +74,30 @@ public class WordDaoTest {
     @Test
     public void insertAndGetWord() throws Exception {
         Book book = new Book("aaa", "authorA", "dddd");
-        mWordDao.insert(book);
-        List<Book> allWords = LiveDataTestUtil.getValue(mWordDao.getAllReadDataSorted());
-        assertEquals(allWords.get(0).getTitle(), book.getTitle());
+        mBookDao.insert(book);
+        List<Book> allBooks = LiveDataTestUtil.getValue(mBookDao.getAllReadDataSorted());
+        assertEquals(allBooks.get(0).getTitle(), book.getTitle());
     }
 
     @Test
     public void getAllWords() throws Exception {
         Book book = new Book("aaa", "authorA", "dddd");
-        mWordDao.insert(book);
+        mBookDao.insert(book);
         Book book1 = new Book("bbb", "authorB", "dddd2");
-        mWordDao.insert(book1);
-        List<Book> allWords = LiveDataTestUtil.getValue(mWordDao.getAllReadDataSorted());
-        assertEquals(allWords.get(0).getTitle(), book.getTitle());
-        assertEquals(allWords.get(1).getTitle(), book1.getTitle());
+        mBookDao.insert(book1);
+        List<Book> allBooks = LiveDataTestUtil.getValue(mBookDao.getAllReadDataSorted());
+        assertEquals(allBooks.get(0).getTitle(), book.getTitle());
+        assertEquals(allBooks.get(1).getTitle(), book1.getTitle());
     }
 
     @Test
     public void deleteAll() throws Exception {
         Book book = new Book("ccc", "authorC", "dddd3");
-        mWordDao.insert(book);
+        mBookDao.insert(book);
         Book book1 = new Book("ddd", "authorD", "dddd4");
-        mWordDao.insert(book1);
-        mWordDao.deleteAll();
-        List<Book> allWords = LiveDataTestUtil.getValue(mWordDao.getAllReadDataSorted());
-        assertTrue(allWords.isEmpty());
+        mBookDao.insert(book1);
+        mBookDao.deleteAll();
+        List<Book> allBooks = LiveDataTestUtil.getValue(mBookDao.getAllReadDataSorted());
+        assertTrue(allBooks.isEmpty());
     }
 }

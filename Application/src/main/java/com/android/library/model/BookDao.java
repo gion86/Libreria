@@ -35,8 +35,14 @@ public interface BookDao {
     @Query("DELETE FROM book_table")
     void deleteAll();
 
-    @Query("SELECT * FROM book_table WHERE title LIKE :title")
-    LiveData<List<Book>> find(String title);
+    /**
+     * Full text search query
+     *
+     * @param term the FTS search key
+     * @return the record set of books found
+     */
+    @Query("SELECT * FROM book_table WHERE title LIKE :term")
+    LiveData<List<Book>> findWithFTS(String term);
 
 //    @Query("SELECT * FROM book_table WHERE book_table MATCH :term")
 //    LiveData<List<Book>> find(String term);

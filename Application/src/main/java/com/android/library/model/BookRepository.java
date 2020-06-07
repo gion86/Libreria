@@ -47,7 +47,7 @@ public class BookRepository {
     }
 
     public LiveData<List<Book>> find(String term) {
-        return m_bookDao.find("%" + term + "%");
+        return m_bookDao.findWithFTS("%" + term + "%");
         //return m_bookDao.find(term);
 //      TODO  BookRoomDatabase.s_databaseWriteExecutor.execute(() -> {
 //        });
