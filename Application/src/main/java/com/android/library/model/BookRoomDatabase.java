@@ -23,20 +23,6 @@ public abstract class BookRoomDatabase extends RoomDatabase {
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
             super.onOpen(db);
-
-            // If you want to keep data through app restarts,
-            // comment out the following block
-            s_databaseWriteExecutor.execute(() -> {
-                // Populate the database in the background.
-                // If you want to start with more words, just add them.
-//                BookDao dao = INSTANCE.bookDao();
-//                dao.deleteAll();
-
-//                Book book = new Book("title", "author", "date");
-//                dao.insert(book);
-//                book = new Book("title2", "author2", "date2");
-//                dao.insert(book);
-            });
         }
     };
 

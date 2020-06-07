@@ -20,10 +20,10 @@ public interface BookDao {
     @Query("SELECT * FROM book_table")
     LiveData<List<Book>> getAll();
 
-    @Query("SELECT * FROM book_table WHERE id IN (:bookIds)")
+    @Query("SELECT * FROM book_table WHERE rowid IN (:bookIds)")
     LiveData<List<Book>> getAllByIds(int[] bookIds);
 
-    @Query("SELECT * from book_table ORDER BY read_date ASC")
+    @Query("SELECT * FROM book_table ORDER BY read_date ASC")
     LiveData<List<Book>> getAllReadDataSorted();
 
     @Query("SELECT * FROM book_table WHERE title LIKE :title")
@@ -41,10 +41,7 @@ public interface BookDao {
      * @param term the FTS search key
      * @return the record set of books found
      */
-    @Query("SELECT * FROM book_table WHERE title LIKE :term")
+    @Query("SELECT * FROM book_table WHERE book_table MATCH :term")
     LiveData<List<Book>> findWithFTS(String term);
-
-//    @Query("SELECT * FROM book_table WHERE book_table MATCH :term")
-//    LiveData<List<Book>> find(String term);
 }
 

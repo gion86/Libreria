@@ -26,7 +26,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.Nullable;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -41,7 +40,6 @@ import com.android.library.viewadapter.BookListViewAdapter;
 import com.android.library.viewmodel.BookViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
@@ -58,7 +56,6 @@ public class MainActivity extends SampleActivityBase {
     private boolean mLogShown;
 
     private BookViewModel m_bookViewModel;
-    private LifecycleOwner lifecycleOwner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +68,7 @@ public class MainActivity extends SampleActivityBase {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         m_bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
-
-        m_bookViewModel.getAllBooks().observe(this, new Observer<List<Book>>() {
+        m_bookViewModel.getBooks().observe(this, new Observer<List<Book>>() {
             @Override
             public void onChanged(@Nullable final List<Book> books) {
                 // Update the cached copy of the words in the adapter.
@@ -80,57 +76,22 @@ public class MainActivity extends SampleActivityBase {
             }
         });
 
-        // TODO lifecycleOwner!!!!!
-        lifecycleOwner = this;
-
-        // TODO to add to the DB
-//        Word word = new Word(data.getStringExtra(NewWordActivity.EXTRA_REPLY));
-//        mWordViewModel.insert(word);
-
         TextInputEditText bookSearchText = (TextInputEditText) findViewById(R.id.text_search_field);
-
         bookSearchText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 String strValue = bookSearchText.getText().toString();
-
-                // TODO viltrare vista con risultati query..
-                if (strValue.isEmpty()) {
-                    m_bookViewModel.getAllBooks().observe(lifecycleOwner, new Observer<List<Book>>() {
-                        @Override
-                        public void onChanged(@Nullable final List<Book> books) {
-                            // Update the cached copy of the words in the adapter.
-                            adapter.setBooks(books);
-                        }
-                    });
-                } else {
-                    m_bookViewModel.find(strValue).observe(lifecycleOwner, new Observer<List<Book>>() {
-                        @Override
-                        public void onChanged(@Nullable final List<Book> books) {
-                            // Update the cached copy of the words in the adapter.
-                            adapter.setBooks(books);
-                        }
-                    });
-                }
+                m_bookViewModel.setBookFilter(strValue);
             }
         });
-
-        //        if (savedInstanceState == null) {
-//            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//            RecyclerViewFragment fragment = new RecyclerViewFragment();
-//            transaction.replace(R.id.sample_content_fragment, fragment);
-//            transaction.commit();
-//        }
     }
 
     @Override
@@ -145,12 +106,6 @@ public class MainActivity extends SampleActivityBase {
 //        logToggle.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
 //            @Override
 //            public boolean onMenuItemClick(MenuItem item) {
-//                // TODO check read permission https://developer.android.com/training/permissions/requesting#java
-//                Intent intent = new Intent()
-//                        .setType("*/*")
-//                        .setAction(Intent.ACTION_GET_CONTENT);
-//
-//                startActivityForResult(Intent.createChooser(intent, "Seleziona un file"), ACTIVITY_FILE_REQUEST_CODE);
 //                return true;
 //            }
 //        });
@@ -177,31 +132,9 @@ public class MainActivity extends SampleActivityBase {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ACTIVITY_FILE_REQUEST_CODE && resultCode == RESULT_OK) {
-            // The uri with the location of the file
-            Uri selectedFile = data.getData();
-
-            File file = new File(selectedFile.getPath());
-            System.err.println(selectedFile);
-
-//            StringBuilder stringBuilder = new StringBuilder();
-//            try (InputStream inputStream = getContentResolver().openInputStream(selectedFile);
-//                 BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(inputStream)))) {
-//                String line;
-//                while ((line = reader.readLine()) != null) {
-//                    stringBuilder.append(line);
-//                }
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            System.out.println(stringBuilder.toString());
-
-
-            //File sdcard = Environment.getExternalStorageDirectory();
-            //File file = new File(sdcard, "amazon_book_list.txt");
-
             try {
+                // The uri with the location of the file
+                Uri selectedFile = data.getData();
                 InputStream inputStream = getContentResolver().openInputStream(selectedFile);
                 IBookImporter bookImporter = new AmazonBookImporter();
                 bookImporter.importBooks(inputStream);
