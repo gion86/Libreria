@@ -75,7 +75,7 @@ public class DBQueryTest {
         assertNotNull(book);
         assertTrue(book.getTitle().equals("Il profumo delle rose"));
         assertTrue(book.getAuthor().equals("Victoria Connelly"));
-        assertTrue(book.getReadDate().equals("11 maggio 2020"));
+        assertTrue(book.getReadDate() == 1589148000000L);
     }
 
     /**
@@ -86,7 +86,7 @@ public class DBQueryTest {
         List<Book> allBooks = LiveDataTestUtil.getValue(mBookDao.findWithFTS("ragazza"));
 
         assertNotNull(allBooks);
-        assertTrue(allBooks.size() == 0);
+        assertTrue(allBooks.size() == 9);
 
         for (Book book: allBooks) {
             System.out.println(book);

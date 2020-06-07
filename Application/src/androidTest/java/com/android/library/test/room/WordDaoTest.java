@@ -73,7 +73,7 @@ public class WordDaoTest {
 
     @Test
     public void insertAndGetWord() throws Exception {
-        Book book = new Book("aaa", "authorA", "dddd");
+        Book book = new Book("aaa", "authorA", 12);
         mBookDao.insert(book);
         List<Book> allBooks = LiveDataTestUtil.getValue(mBookDao.getAllReadDataSorted());
         assertEquals(allBooks.get(0).getTitle(), book.getTitle());
@@ -81,9 +81,9 @@ public class WordDaoTest {
 
     @Test
     public void getAllWords() throws Exception {
-        Book book = new Book("aaa", "authorA", "dddd");
+        Book book = new Book("aaa", "authorA", 13);
         mBookDao.insert(book);
-        Book book1 = new Book("bbb", "authorB", "dddd2");
+        Book book1 = new Book("bbb", "authorB", 14);
         mBookDao.insert(book1);
         List<Book> allBooks = LiveDataTestUtil.getValue(mBookDao.getAllReadDataSorted());
         assertEquals(allBooks.get(0).getTitle(), book.getTitle());
@@ -92,9 +92,9 @@ public class WordDaoTest {
 
     @Test
     public void deleteAll() throws Exception {
-        Book book = new Book("ccc", "authorC", "dddd3");
+        Book book = new Book("ccc", "authorC", 13);
         mBookDao.insert(book);
-        Book book1 = new Book("ddd", "authorD", "dddd4");
+        Book book1 = new Book("ddd", "authorD", 14);
         mBookDao.insert(book1);
         mBookDao.deleteAll();
         List<Book> allBooks = LiveDataTestUtil.getValue(mBookDao.getAllReadDataSorted());

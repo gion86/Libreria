@@ -40,14 +40,6 @@ public class BookViewModel extends AndroidViewModel {
         return m_allBooks;
     }
 
-//    public LiveData<List<Book>> getAllBooks() {
-//        return m_repository.getAllBooks();
-//    }
-//
-//    public LiveData<List<Book>> getFilteredBooks(String term) {
-//        return m_repository.find(term);
-//    }
-
     public void setBookFilter(String term) {
         m_filterBooks.setValue(term);
     }

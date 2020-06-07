@@ -23,7 +23,7 @@ public interface BookDao {
     @Query("SELECT * FROM book_table WHERE rowid IN (:bookIds)")
     LiveData<List<Book>> getAllByIds(int[] bookIds);
 
-    @Query("SELECT * FROM book_table ORDER BY read_date ASC")
+    @Query("SELECT * FROM book_table ORDER BY read_date DESC")
     LiveData<List<Book>> getAllReadDataSorted();
 
     @Query("SELECT * FROM book_table WHERE title LIKE :title")

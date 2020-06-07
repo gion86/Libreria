@@ -5,18 +5,21 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Fts4;
 
-// TODO Support full-text search
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 // If your app requires very quick access to database information through full-text search (FTS),
 // have your entities backed by a virtual table that uses either the FTS3 or FTS4 SQLite extension
 // module. To use this capability, available in Room 2.1.0 and higher, add the @Fts3 or @Fts4
-// annotation to a given entity, as shown in the following code snippet:
+// annotation to a given entity.
+
+// The single primary key field in an FTS entity must either be named 'rowid' or must be annotated
+// with @ColumnInfo(name = "rowid").
+
 @Fts4
 @Entity(tableName = "book_table")
 public class Book {
-//    @PrimaryKey(autoGenerate = true)
-    // The single primary key field in an FTS entity must either be named 'rowid' or must be annotated with @ColumnInfo(name = "rowid")
-//    @ColumnInfo(name = "rowid")
-//    private int id;
+    private static final SimpleDateFormat DATE_PRINT_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 
     @NonNull
     @ColumnInfo(name = "title")
@@ -26,17 +29,13 @@ public class Book {
     private String author;
 
     @ColumnInfo(name = "read_date")
-    private String readDate;
+    private long readDate;
 
-    public Book(String title, String author, String readDate) {
+    public Book(String title, String author, long readDate) {
         this.title = title;
         this.author = author;
         this.readDate = readDate;
     }
-
-//    public int getId() {
-//        return id;
-//    }
 
     @NonNull
     public String getTitle() {
@@ -47,13 +46,13 @@ public class Book {
         return author;
     }
 
-    public String getReadDate() {
+    public long getReadDate() {
         return readDate;
     }
 
-//    public void setId(int id) {
-//        this.id = id;
-//    }
+    public String getHumanReadDate() {
+        return DATE_PRINT_FORMAT.format(new Date(readDate));
+    }
 
     public void setTitle(@NonNull String title) {
         this.title = title;
@@ -63,13 +62,13 @@ public class Book {
         this.author = author;
     }
 
-    public void setReadDate(String readDate) {
+    public void setReadDate(long readDate) {
         this.readDate = readDate;
     }
 
     @NonNull
     @Override
     public String toString() {
-        return "BOOK = " + title + ", " + author + ", " + readDate;
+        return "BOOK = " + title + ", " + author + ", " + getHumanReadDate();
     }
 }

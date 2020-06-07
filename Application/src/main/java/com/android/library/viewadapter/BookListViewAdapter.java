@@ -13,14 +13,14 @@ import com.android.library.recyclerview.R;
 
 import java.util.List;
 
-public class BookListViewAdapter extends RecyclerView.Adapter<BookListViewAdapter.WordViewHolder> {
+public class BookListViewAdapter extends RecyclerView.Adapter<BookListViewAdapter.BookViewHolder> {
 
-    class WordViewHolder extends RecyclerView.ViewHolder {
+    class BookViewHolder extends RecyclerView.ViewHolder {
         private final TextView bookTitleView;
         private final TextView bookAuthorView;
         private final TextView bookDateView;
 
-        private WordViewHolder(View itemView) {
+        private BookViewHolder(View itemView) {
             super(itemView);
             bookTitleView = (TextView) itemView.findViewById(R.id.bookTitleView);
             bookAuthorView = (TextView) itemView.findViewById(R.id.bookAuthorView);
@@ -29,25 +29,25 @@ public class BookListViewAdapter extends RecyclerView.Adapter<BookListViewAdapte
     }
 
     private final LayoutInflater mInflater;
-    private List<Book> m_books; // Cached copy of words
+    private List<Book> m_books; // Cached copy of books
 
     public BookListViewAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
     }
 
     @Override
-    public WordViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BookViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = mInflater.inflate(R.layout.recyclerview_item, parent, false);
-        return new WordViewHolder(itemView);
+        return new BookViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(WordViewHolder holder, int position) {
+    public void onBindViewHolder(BookViewHolder holder, int position) {
         if (m_books != null) {
-            Book current = m_books.get(position);
-            holder.bookTitleView.setText(current.getTitle());
-            holder.bookAuthorView.setText(current.getAuthor());
-            holder.bookDateView.setText(current.getReadDate());
+            Book currentBook = m_books.get(position);
+            holder.bookTitleView.setText(currentBook.getTitle());
+            holder.bookAuthorView.setText(currentBook.getAuthor());
+            holder.bookDateView.setText(currentBook.getHumanReadDate());
         } else {
             // Covers the case of data not being ready yet.
             holder.bookTitleView.setText("No book");
@@ -61,8 +61,6 @@ public class BookListViewAdapter extends RecyclerView.Adapter<BookListViewAdapte
         notifyDataSetChanged();
     }
 
-    // getItemCount() is called many times, and when it is first called,
-    // mWords has not been updated (means initially, it's null, and we can't return null).
     @Override
     public int getItemCount() {
         if (m_books != null)

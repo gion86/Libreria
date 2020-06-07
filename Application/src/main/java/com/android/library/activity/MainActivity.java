@@ -26,12 +26,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.library.common.activities.SampleActivityBase;
 import com.android.library.importdata.AmazonBookImporter;
 import com.android.library.importdata.IBookImporter;
 import com.android.library.model.Book;
@@ -47,7 +47,7 @@ import java.util.List;
 /**
  * TODO
  */
-public class MainActivity extends SampleActivityBase {
+public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
     public static final int ACTIVITY_FILE_REQUEST_CODE = 1;
