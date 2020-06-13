@@ -8,8 +8,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.net.URL;
 import java.util.List;
 
+import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 
 public class AmazonBookImporterTest {
@@ -19,7 +21,9 @@ public class AmazonBookImporterTest {
     @Before
     public void importBooks() {
         ClassLoader classLoader = this.getClass().getClassLoader();
-        File bookFile = new File(classLoader.getResource("amazon_book_list.txt").getFile());
+        URL fileUrl = classLoader.getResource("amazon_book_list.txt");
+        assertNotNull(fileUrl);
+        File bookFile = new File(fileUrl.getFile());
         assertTrue(bookFile.exists());
 
         IBookImporter bookImporter = new AmazonBookImporter();

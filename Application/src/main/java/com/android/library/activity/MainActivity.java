@@ -24,6 +24,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -116,12 +117,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_import_book:
-                // TODO check read permission https://developer.android.com/training/permissions/requesting#java
                 Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("*/*");
 
-                startActivityForResult(Intent.createChooser(intent, "Seleziona un file"), ACTIVITY_FILE_REQUEST_CODE);
+                String title = getResources().getString(R.string.menu_select_file);
+                startActivityForResult(Intent.createChooser(intent, title), ACTIVITY_FILE_REQUEST_CODE);
                 supportInvalidateOptionsMenu();
                 return true;
         }
@@ -142,6 +143,8 @@ public class MainActivity extends AppCompatActivity {
                 for (Book book : bookImporter.getBookList()) {
                     m_bookViewModel.insertIfNotExist(book);
                 }
+
+                Toast.makeText(getApplication(), R.string.mes_books_imported, Toast.LENGTH_SHORT).show();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
