@@ -15,9 +15,7 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.library.recyclerview"
-    android:versionCode="5"
-    android:versionName="0.2">
+    package="com.android.library.recyclerview">
 
     <!-- Min/target SDK versions (<uses-sdk>) managed by build.gradle -->
 
