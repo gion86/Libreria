@@ -45,7 +45,7 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * TODO
+ * Activity to show the book database content and search with full text search.
  */
 public class MainActivity extends AppCompatActivity {
 

@@ -39,11 +39,8 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.assertEquals;
 
 /**
- * TODO This is not meant to be a full set of tests. For simplicity, most of your samples do not
- * include tests. However, when building the Room, it is helpful to make sure it works before
- * adding the UI.
+ * Tests for DAO object, used to execute queries and read/write from DB.
  */
-
 @RunWith(AndroidJUnit4.class)
 public class WordDaoTest {
 
