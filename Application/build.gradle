@@ -48,14 +48,19 @@ dependencies {
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('/home/gionata/workspace_Android/Keystore/android_app_ks.jks')
+        }
+    }
     compileSdkVersion 28
 
     defaultConfig {
         applicationId "com.android.library.libreria"
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 6
-        versionName "0.2"
+        versionCode 8
+        versionName "0.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
