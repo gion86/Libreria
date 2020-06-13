@@ -15,16 +15,16 @@ import java.util.List;
 
 public class BookListViewAdapter extends RecyclerView.Adapter<BookListViewAdapter.BookViewHolder> {
 
-    class BookViewHolder extends RecyclerView.ViewHolder {
+    static class BookViewHolder extends RecyclerView.ViewHolder {
         private final TextView bookTitleView;
         private final TextView bookAuthorView;
         private final TextView bookDateView;
 
         private BookViewHolder(View itemView) {
             super(itemView);
-            bookTitleView = (TextView) itemView.findViewById(R.id.bookTitleView);
-            bookAuthorView = (TextView) itemView.findViewById(R.id.bookAuthorView);
-            bookDateView = (TextView) itemView.findViewById(R.id.bookDateView);
+            bookTitleView = itemView.findViewById(R.id.bookTitleView);
+            bookAuthorView = itemView.findViewById(R.id.bookAuthorView);
+            bookDateView = itemView.findViewById(R.id.bookDateView);
         }
     }
 
@@ -50,7 +50,7 @@ public class BookListViewAdapter extends RecyclerView.Adapter<BookListViewAdapte
             holder.bookDateView.setText(currentBook.getHumanReadDate());
         } else {
             // Covers the case of data not being ready yet.
-            holder.bookTitleView.setText("No book");
+            holder.bookTitleView.setText(R.string.mes_no_books);
             holder.bookAuthorView.setText("");
             holder.bookDateView.setText("");
         }

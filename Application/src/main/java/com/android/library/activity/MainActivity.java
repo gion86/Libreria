@@ -26,9 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,7 +41,6 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.List;
 
 /**
  * Activity to show the book database content and search with full text search.
@@ -52,9 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
     public static final int ACTIVITY_FILE_REQUEST_CODE = 1;
-
-    // Whether the Log Fragment is currently shown
-    private boolean mLogShown;
 
     private BookViewModel m_bookViewModel;
 
@@ -69,15 +63,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         m_bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
-        m_bookViewModel.getBooks().observe(this, new Observer<List<Book>>() {
-            @Override
-            public void onChanged(@Nullable final List<Book> books) {
-                // Update the cached copy of the words in the adapter.
-                adapter.setBooks(books);
-            }
+        m_bookViewModel.getBooks().observe(this, books -> {
+            // Update the cached copy of the words in the adapter.
+            adapter.setBooks(books);
         });
 
-        TextInputEditText bookSearchText = (TextInputEditText) findViewById(R.id.text_search_field);
+        TextInputEditText bookSearchText = findViewById(R.id.text_search_field);
         bookSearchText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -136,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 // The uri with the location of the file
                 Uri selectedFile = data.getData();
+                assert selectedFile != null;
                 InputStream inputStream = getContentResolver().openInputStream(selectedFile);
                 IBookImporter bookImporter = new AmazonBookImporter();
                 bookImporter.importBooks(inputStream);

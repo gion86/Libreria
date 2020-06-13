@@ -4,4 +4,5 @@
     <string name="string_search">Ricerca</string>
     <string name="mes_books_imported">Libri importati</string>
     <string name="menu_select_file">Seleziona un file</string>
+    <string name="mes_no_books">Nessun libro</string>
 </resources>

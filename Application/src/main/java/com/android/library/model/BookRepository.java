@@ -24,9 +24,7 @@ public class BookRepository {
     }
 
     public void insert(Book book) {
-        BookRoomDatabase.s_databaseWriteExecutor.execute(() -> {
-            m_bookDao.insert(book);
-        });
+        BookRoomDatabase.s_databaseWriteExecutor.execute(() -> m_bookDao.insert(book));
     }
 
     public void insertIfNotExist(Book book) {

@@ -63,9 +63,6 @@ public class AmazonBookImporter implements IBookImporter {
                 case "dicembre":
                     month = 12;
                     break;
-                default:
-                    month = -1;
-                    break;
             }
 
             try {

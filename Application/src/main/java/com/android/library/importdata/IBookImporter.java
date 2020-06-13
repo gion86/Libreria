@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface IBookImporter {
 
-    public void importBooks(File file);
+    void importBooks(File file);
 
-    public void importBooks(InputStream inputStream);
+    void importBooks(InputStream inputStream);
 
-    public  List<Book> getBookList();
+    List<Book> getBookList();
 }

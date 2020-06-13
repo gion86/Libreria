@@ -19,7 +19,7 @@ public abstract class BookRoomDatabase extends RoomDatabase {
     public static final ExecutorService s_databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    private static RoomDatabase.Callback s_roomDatabaseCallback = new RoomDatabase.Callback() {
+    private static final RoomDatabase.Callback s_roomDatabaseCallback = new RoomDatabase.Callback() {
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
             super.onOpen(db);
